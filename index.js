@@ -37,14 +37,10 @@ function createCORSRequest(method, url) {
   };
 }
 
-const northboundUrl = 'https://api.bart.gov/api/etd.aspx?cmd=etd&orig=12th&key=MW9S-E7SL-26DU-VV8V&dir=n&json=y'
-const southboundUrl = 'https://api.bart.gov/api/etd.aspx?cmd=etd&orig=12th&key=MW9S-E7SL-26DU-VV8V&dir=s&json=y'
-const xhrNorth = createCORSRequest('GET', northboundUrl);
-const xhrSouth = createCORSRequest('GET', southboundUrl);
 
 function handleResponse(responseJson) {
   const station = responseJson.root.station[0];
-  document.getElementById('station-name').textContent = station.name;
+  setHeaderText(station.name);
   station.etd.forEach(destination => {
     const myDiv = document.createElement('div');
     myDiv.textContent = destination.destination + ' ' + destination.estimate.map(estimate => estimate.minutes).join(', ');
@@ -53,17 +49,14 @@ function handleResponse(responseJson) {
   });
 };
 
-xhrNorth.send().then(handleResponse).catch(console.error);
-
-xhrSouth.send().then(handleResponse).catch(console.error);
-
 navigator.geolocation.getCurrentPosition(function(position) {
-  console.log('got position')
+  console.log('got position');
   console.log(position.coords.latitude, position.coords.longitude);
   const userLocation = [position.coords.latitude, position.coords.longitude];
   const {closestStation, absoluteDistance} = findClosest(userLocation);
   console.log('closestStation', closestStation);
   console.log('absoluteDistance', absoluteDistance);
+  loadClosestStationEstimate(closestStation);
 });
 
 function findClosest(userLocation) {
@@ -77,6 +70,21 @@ function findClosest(userLocation) {
     }
   }
   return {closestStation, absoluteDistance};
+}
+
+function loadClosestStationEstimate(stationAbbr) {
+  setHeaderText(`Getting schedule for ${stationAbbr}`);
+  const northboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=n&json=y`
+  const southboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=s&json=y`
+  const xhrNorth = createCORSRequest('GET', northboundUrl);
+  const xhrSouth = createCORSRequest('GET', southboundUrl);
+
+  xhrNorth.send().then(handleResponse).catch(console.error);
+  xhrSouth.send().then(handleResponse).catch(console.error);
+}
+
+function setHeaderText(headerText) {
+  document.getElementById('station-name').textContent = headerText;
 }
 
 function getDistBetween(coord1, coord2) {
