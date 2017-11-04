@@ -1,31 +1,66 @@
-html {
+html, body {
   font-family: arial;
+  margin: 0;
 }
 
 #station-name {
   text-align: center;
 }
 
-li {
+ul, li {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.train-container {
+  border-bottom: 2px solid rgba(50, 50, 100, 0.1);
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.train-destination {
+  /* Vertically centers text in item - must be same as list item height */
+  line-height: 3em;
+}
+
+.estimates-list {
+  display: flex;
+}
+
+.estimate-list-item {
+  margin-left: 1em;
+
+  /* List item height */
+  height: 3em;
+
+  width: 3em;
+  text-align: center;
+
+  /* Vertically centers text in item - must be same as list item height */
+  line-height: 3em;
+
+  border: 1px solid black;
+  border-radius: 50%;
 }
 
 .line-red {
-  background-color: rgba(239, 14, 14, 0.5);
+  background-color: rgba(239, 14, 14, 0.1);
 }
 
 .line-green {
-  background-color: rgba(14, 239, 66, 0.5);
+  background-color: rgba(14, 239, 66, 0.1);
 }
 
 .line-blue {
-  background-color: rgba(14, 62, 239, 0.5);
+  background-color: rgba(14, 62, 239, 0.1);
 }
 
 .line-orange {
-  background-color: rgba(239, 145, 14, 0.5);
+  background-color: rgba(239, 145, 14, 0.1);
 }
 
 .line-yellow {
-  background-color: rgba(239, 235, 9, 0.5);
+  background-color: rgba(239, 235, 9, 0.1);
 }

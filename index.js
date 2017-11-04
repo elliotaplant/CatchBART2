@@ -1,3 +1,5 @@
+const inTestMode = location.href.startsWith('file:');
+
 function createCORSRequest(method, url) {
   const xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
@@ -75,15 +77,22 @@ function handleResponse(responseJson) {
   document.body.append(destinationList);
 };
 
-navigator.geolocation.getCurrentPosition(function(position) {
-  console.log('got position');
-  console.log(position.coords.latitude, position.coords.longitude);
-  const userLocation = [position.coords.latitude, position.coords.longitude];
-  const {closestStation, absoluteDistance} = findClosest(userLocation);
-  console.log('closestStation', closestStation);
-  console.log('absoluteDistance', absoluteDistance);
-  loadClosestStationEstimate(closestStation);
-});
+function init(mode) {
+  if (mode === 'test') {
+    loadClosestStationEstimate('EMBR');
+  } else {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log('got position');
+      console.log(position.coords.latitude, position.coords.longitude);
+      const userLocation = [position.coords.latitude, position.coords.longitude];
+      const {closestStation, absoluteDistance} = findClosest(userLocation);
+      console.log('closestStation', closestStation);
+      console.log('absoluteDistance', absoluteDistance);
+      loadClosestStationEstimate(closestStation);
+    });
+  }
+}
+
 
 function findClosest(userLocation) {
   let absoluteDistance = Infinity;
@@ -126,6 +135,17 @@ function getDistBetween(coord1, coord2) {
   return R * c;
 }
 
+init(inTestMode ? 'test' : null);
+
+// Math
+/** Converts numeric degrees to radians */
+if (typeof(Number.prototype.toRadians) === "undefined") {
+  Number.prototype.toRadians = function() {
+    return this * Math.PI / 180;
+  }
+}
+
+// Data
 const stationCoords = {
   '12TH': [
     37.803768, -122.271450
@@ -265,10 +285,100 @@ const stationCoords = {
   'WOAK': [37.804872, -122.295140]
 }
 
-// Math
-/** Converts numeric degrees to radians */
-if (typeof(Number.prototype.toRadians) === "undefined") {
-  Number.prototype.toRadians = function() {
-    return this * Math.PI / 180;
-  }
-}
+const testResponse = {
+   "?xml":{
+      "@version":"1.0",
+      "@encoding":"utf-8"
+   },
+   "root":{
+      "@id":"1",
+      "uri":{
+         "#cdata-section":"http://api.bart.gov/api/etd.aspx?cmd=etd&orig=12TH&dir=n&json=y"
+      },
+      "date":"11/03/2017",
+      "time":"05:45:16 PM PDT",
+      "station":[
+         {
+            "name":"12th St. Oakland City Center",
+            "abbr":"12TH",
+            "etd":[
+               {
+                  "destination":"Pittsburg/Bay Point",
+                  "abbreviation":"PITT",
+                  "limited":"0",
+                  "estimate":[
+                     {
+                        "minutes":"7",
+                        "platform":"3",
+                        "direction":"North",
+                        "length":"9",
+                        "color":"YELLOW",
+                        "hexcolor":"#ffff33",
+                        "bikeflag":"1",
+                        "delay":"269"
+                     },
+                     {
+                        "minutes":"11",
+                        "platform":"3",
+                        "direction":"North",
+                        "length":"10",
+                        "color":"YELLOW",
+                        "hexcolor":"#ffff33",
+                        "bikeflag":"1",
+                        "delay":"213"
+                     },
+                     {
+                        "minutes":"23",
+                        "platform":"3",
+                        "direction":"North",
+                        "length":"10",
+                        "color":"YELLOW",
+                        "hexcolor":"#ffff33",
+                        "bikeflag":"1",
+                        "delay":"0"
+                     }
+                  ]
+               },
+               {
+                  "destination":"Richmond",
+                  "abbreviation":"RICH",
+                  "limited":"0",
+                  "estimate":[
+                     {
+                        "minutes":"1",
+                        "platform":"1",
+                        "direction":"North",
+                        "length":"10",
+                        "color":"RED",
+                        "hexcolor":"#ff0000",
+                        "bikeflag":"1",
+                        "delay":"0"
+                     },
+                     {
+                        "minutes":"9",
+                        "platform":"1",
+                        "direction":"North",
+                        "length":"6",
+                        "color":"ORANGE",
+                        "hexcolor":"#ff9933",
+                        "bikeflag":"1",
+                        "delay":"61"
+                     },
+                     {
+                        "minutes":"16",
+                        "platform":"1",
+                        "direction":"North",
+                        "length":"8",
+                        "color":"RED",
+                        "hexcolor":"#ff0000",
+                        "bikeflag":"1",
+                        "delay":"0"
+                     }
+                  ]
+               }
+            ]
+         }
+      ],
+      "message":""
+   }
+};
