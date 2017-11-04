@@ -65,7 +65,7 @@ function handleResponse(responseJson) {
       estimateLi.classList.add('estimate-list-item');
 
       if (estimate.minutes.toLowerCase() === 'leaving') {
-        estimate.minutes = 'Now';
+        estimate.minutes = '0';
       }
 
       estimateLi.textContent = estimate.minutes;
