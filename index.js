@@ -80,6 +80,7 @@ function handleResponse(responseJson) {
 function init() {
   if (inTestMode) {
     loadClosestStationEstimate('EMBR');
+    setDistanceInHeader(0.12124124124);
   } else {
     navigator.geolocation.getCurrentPosition(function(position) {
       console.log('got position');
@@ -89,6 +90,7 @@ function init() {
       console.log('closestStation', closestStation);
       console.log('absoluteDistance', absoluteDistance);
       loadClosestStationEstimate(closestStation);
+      setDistanceInHeader(absoluteDistance);
     });
   }
 }
@@ -124,6 +126,14 @@ function loadClosestStationEstimate(stationAbbr) {
 
 function setHeaderText(headerText) {
   document.getElementById('station-name').textContent = headerText;
+}
+
+function setDistanceInHeader(distance) {
+  const distanceEstimateElement = document.getElementById('distance-estimate');
+  const distanceString = distance.toString();
+  const decimalIndex = distanceString.indexOf('.');
+  const formattedDistance = distanceString.substr(0, decimalIndex + 2);
+  distanceEstimateElement.textContent = formattedDistance + ' miles';
 }
 
 function getDistBetween(coord1, coord2) {
