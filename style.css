@@ -22,7 +22,7 @@ ul, li {
 
 .train-destination {
   /* Vertically centers text in item - must be same as list item height */
-  line-height: 3em;
+  line-height: 10vw;
 }
 
 .estimates-list {
@@ -33,13 +33,14 @@ ul, li {
   margin-left: 1em;
 
   /* List item height */
-  height: 3em;
+  height: 10vw;
 
-  width: 3em;
+  /* Makes destination outline a circle - must be same as list item height */
+  width: 10vw;
   text-align: center;
 
   /* Vertically centers text in item - must be same as list item height */
-  line-height: 3em;
+  line-height: 10vw;
 
   border: 1px solid black;
   border-radius: 50%;
