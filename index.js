@@ -41,12 +41,38 @@ function createCORSRequest(method, url) {
 function handleResponse(responseJson) {
   const station = responseJson.root.station[0];
   setHeaderText(station.name);
+  const destinationList = document.getElementById('destinations-list');
+
   station.etd.forEach(destination => {
-    const myDiv = document.createElement('div');
-    myDiv.textContent = destination.destination + ' ' + destination.estimate.map(estimate => estimate.minutes).join(', ');
-    myDiv.style['background-color'] = destination.estimate[0].color.toLowerCase();
-    document.body.append(myDiv);
+    const trainContainer = document.createElement('li');
+    trainContainer.classList.add('train-container');
+    trainContainer.classList.add('line-' + destination.estimate[0].color.toLowerCase());
+    destinationList.append(trainContainer);
+
+    const trainDestination = document.createElement('div');
+    trainDestination.classList.add('train-destination');
+    trainDestination.textContent = destination.destination
+    trainContainer.append(trainDestination);
+
+    const estimatesList = document.createElement('ul');
+    estimatesList.classList.add('estimates-list');
+    trainContainer.append(estimatesList);
+
+    destination.estimate.forEach(estimate => {
+      const estimateLi = document.createElement('li');
+      estimateLi.classList.add('estimate-list-item');
+
+      if (estimate.minutes.toLowerCase() === 'leaving') {
+        estimate.minutes = 'Now';
+      }
+
+      estimateLi.textContent = estimate.minutes;
+
+      estimatesList.append(estimateLi);
+    });
   });
+
+  document.body.append(destinationList);
 };
 
 navigator.geolocation.getCurrentPosition(function(position) {

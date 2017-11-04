@@ -5,3 +5,27 @@ html {
 #station-name {
   text-align: center;
 }
+
+li {
+  list-style-type: none;
+}
+
+.line-red {
+  background-color: rgba(239, 14, 14, 0.5);
+}
+
+.line-green {
+  background-color: rgba(14, 239, 66, 0.5);
+}
+
+.line-blue {
+  background-color: rgba(14, 62, 239, 0.5);
+}
+
+.line-orange {
+  background-color: rgba(239, 145, 14, 0.5);
+}
+
+.line-yellow {
+  background-color: rgba(239, 235, 9, 0.5);
+}
