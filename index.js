@@ -1,4 +1,5 @@
 const inTestMode = location.href.startsWith('file:');
+let stationTravelTime = 10; // minutes
 
 function createCORSRequest(method, url) {
   const xhr = new XMLHttpRequest();
@@ -69,12 +70,15 @@ function handleResponse(responseJson) {
       }
 
       estimateLi.textContent = estimate.minutes;
+      estimateLi.dataset.estimate = estimate.minutes;
 
       estimatesList.append(estimateLi);
     });
   });
 
   document.body.append(destinationList);
+
+  colorEstimateBasedOnTime();
 };
 
 function init() {
@@ -83,12 +87,8 @@ function init() {
     setDistanceInHeader(0.12124124124);
   } else {
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.log('got position');
-      console.log(position.coords.latitude, position.coords.longitude);
       const userLocation = [position.coords.latitude, position.coords.longitude];
       const {closestStation, absoluteDistance} = findClosest(userLocation);
-      console.log('closestStation', closestStation);
-      console.log('absoluteDistance', absoluteDistance);
       loadClosestStationEstimate(closestStation);
       setDistanceInHeader(absoluteDistance);
     });
@@ -134,6 +134,21 @@ function setDistanceInHeader(distance) {
   const decimalIndex = distanceString.indexOf('.');
   const formattedDistance = distanceString.substr(0, decimalIndex + 2);
   distanceEstimateElement.textContent = formattedDistance + ' miles';
+}
+
+function colorEstimateBasedOnTime() {
+  const estimates = Array.from(document.getElementsByClassName('estimate-list-item'));
+  estimates.forEach(estimateElement => {
+    const estimateTime = estimateElement.dataset.estimate;
+    if (estimateTime > stationTravelTime) {
+      estimateElement.classList.add('will-be-late');
+    } else if (estimateTime > stationTravelTime - 5) {
+      estimateElement.classList.add('might-make-it');
+    } else {
+      estimateElement.classList.add('might-make-it');
+    }
+  });
+  stationTravelTime
 }
 
 function getDistBetween(coord1, coord2) {
