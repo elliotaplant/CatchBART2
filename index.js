@@ -19,7 +19,7 @@ function createCORSRequest(method, url) {
   }
 
   xhr.onload = xhr.onerror = function() {
-    console.log('There was an error!');
+    console.error('There was an error with an xhr ');
   };
 
   return {
@@ -77,8 +77,8 @@ function handleResponse(responseJson) {
   document.body.append(destinationList);
 };
 
-function init(mode) {
-  if (mode === 'test') {
+function init() {
+  if (inTestMode) {
     loadClosestStationEstimate('EMBR');
   } else {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -108,14 +108,18 @@ function findClosest(userLocation) {
 }
 
 function loadClosestStationEstimate(stationAbbr) {
-  setHeaderText(`Getting schedule for ${stationAbbr}`);
-  const northboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=n&json=y`
-  const southboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=s&json=y`
-  const xhrNorth = createCORSRequest('GET', northboundUrl);
-  const xhrSouth = createCORSRequest('GET', southboundUrl);
+  if (inTestMode) {
+    handleResponse(testResponse);
+  } else {
+    setHeaderText(`Getting schedule for ${stationAbbr}`);
+    const northboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=n&json=y`
+    const southboundUrl = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationAbbr}&key=MW9S-E7SL-26DU-VV8V&dir=s&json=y`
+    const xhrNorth = createCORSRequest('GET', northboundUrl);
+    const xhrSouth = createCORSRequest('GET', southboundUrl);
 
-  xhrNorth.send().then(handleResponse).catch(console.error);
-  xhrSouth.send().then(handleResponse).catch(console.error);
+    xhrNorth.send().then(handleResponse).catch(console.error);
+    xhrSouth.send().then(handleResponse).catch(console.error);
+  }
 }
 
 function setHeaderText(headerText) {
@@ -135,7 +139,7 @@ function getDistBetween(coord1, coord2) {
   return R * c;
 }
 
-init(inTestMode ? 'test' : null);
+
 
 // Math
 /** Converts numeric degrees to radians */
@@ -382,3 +386,4 @@ const testResponse = {
       "message":""
    }
 };
+init();
