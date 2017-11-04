@@ -5,6 +5,7 @@ html, body {
 
 #station-name {
   text-align: center;
+  font-size: 10vw;
 }
 
 ul, li {
@@ -23,6 +24,7 @@ ul, li {
 .train-destination {
   /* Vertically centers text in item - must be same as list item height */
   line-height: 10vw;
+  font-size: 5vw;
 }
 
 .estimates-list {
@@ -44,6 +46,8 @@ ul, li {
 
   border: 1px solid black;
   border-radius: 50%;
+
+  font-size: 5vw;
 }
 
 .line-red {
