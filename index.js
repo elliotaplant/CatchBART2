@@ -1,4 +1,4 @@
-const inTestMode = location.href.startsWith('file:');
+const inTestMode = false; // location.href.startsWith('file:');
 let stationTravelTime = 10; // minutes
 
 function createCORSRequest(method, url) {
@@ -90,6 +90,7 @@ function init() {
       const userLocation = [position.coords.latitude, position.coords.longitude];
       const {closestStation, absoluteDistance} = findClosest(userLocation);
       loadClosestStationEstimate(closestStation);
+      stationTravelTime = absoluteDistance / 3.1 / 60; // mi/(mi/hr) => hr
       setDistanceInHeader(absoluteDistance);
     });
   }

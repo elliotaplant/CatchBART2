@@ -54,66 +54,32 @@ ul, li {
   font-size: 5vw;
 }
 
+.will-be-late {
+  background-color: rgba(239, 14, 14, 0.5);
+}
+.might-make-it {
+  background-color: rgba(239, 235, 9, 0.5);
+}
+.might-make-it {
+  background-color: rgba(14, 239, 66, 0.5);
+}
+
 .line-red {
-  background-color: rgba(239, 14, 14, 0.3);
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, rgba(239, 14, 14, 0.3), #FFF 40%);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, rgba(239, 14, 14, 0.3), #FFF 40%);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, rgba(239, 14, 14, 0.3), #FFF 40%);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, rgba(239, 14, 14, 0.3), #FFF 40%);
-  /* Standard syntax */
+  border-left: 2vw solid rgb(239, 14, 14);
 }
 
 .line-green {
-  background-color: rgba(14, 239, 66, 0.3);
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, rgba(14, 239, 66, 0.3), #FFF 40%);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, rgba(14, 239, 66, 0.3), #FFF 40%);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, rgba(14, 239, 66, 0.3), #FFF 40%);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, rgba(14, 239, 66, 0.3), #FFF 40%);
-  /* Standard syntax */
+  border-left: 2vw solid rgb(14, 239, 66);
 }
 
 .line-blue {
-  background-color: rgba(14, 62, 239, 0.3);
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, rgba(14, 62, 239, 0.3), #FFF 40%);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, rgba(14, 62, 239, 0.3), #FFF 40%);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, rgba(14, 62, 239, 0.3), #FFF 40%);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, rgba(14, 62, 239, 0.3), 5%), /* Standard syntax */
+  border-left: 2vw solid rgb(14, 62, 239);
 }
 
 .line-orange {
-  background-color: rgba(239, 145, 14, 0.3);
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, rgba(239, 145, 14, 0.3), #FFF 40%);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, rgba(239, 145, 14, 0.3), #FFF 40%);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, rgba(239, 145, 14, 0.3), #FFF 40%);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, rgba(239, 145, 14, 0.3), #FFF 40%);
-  /* Standard syntax */
+  border-left: 2vw solid rgb(239, 145, 14);
 }
 
 .line-yellow {
-  background-color: rgba(239, 235, 9, 0.3);
-  /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left, rgba(239, 235, 9, 0.3), #FFF 40%);
-  /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(right, rgba(239, 235, 9, 0.3), #FFF 40%);
-  /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(right, rgba(239, 235, 9, 0.3), #FFF 40%);
-  /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to right, rgba(239, 235, 9, 0.3), #FFF 40%);
-  /* Standard syntax */
+  border-left: 2vw solid rgb(239, 235, 9);
 }
